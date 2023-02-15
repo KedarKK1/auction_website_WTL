@@ -1,0 +1,3 @@
+[submodule "auction_frontend_WTL"]
+	path = auction_frontend_WTL
+	url = https://github.com/KedarKK1/auction_frontend_WTL.git
