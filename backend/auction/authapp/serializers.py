@@ -11,7 +11,7 @@ class UserCreateSerializer(UserCreateSerializer):
             'email',
             'first_name',
             'last_name',
-            'usertype',
+            'is_staff',
         ]
 
 
@@ -23,5 +23,5 @@ class UserSerializer(UserSerializer):
             'email',
             'first_name',
             'last_name',
-            'usertype'
+            'is_staff'
         ]  # don't pass password here
