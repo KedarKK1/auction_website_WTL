@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # local
     'authapp',    
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+import os
+
+# Actual directory user files go to
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
+
+# URL used to access the media
+MEDIA_URL = '/media/'
+
+# static assets that aren’t tied to a particular app
+# list of directories (STATICFILES_DIRS), where Django will also look for static files
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    '/var/www/static/',
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
