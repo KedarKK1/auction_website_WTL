@@ -17,7 +17,7 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(
     #     default=serializers.CurrentUserDefault(),
     #     queryset=User.objects.all(),
-        read_only=True,
+        read_only=True, # this makes it read_only field, not-editable field
     )
 
     class Meta:

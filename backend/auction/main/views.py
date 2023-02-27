@@ -7,6 +7,9 @@ from rest_framework import mixins, viewsets
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, CreateModelMixin
 from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 # Class-based views — Inherits the APIView class
 # Function-based views — Uses the @api_view decorator
@@ -38,6 +41,11 @@ class AuctionViewset(ListModelMixin, CreateModelMixin, RetrieveModelMixin, Gener
     queryset = AuctionModel.objects.all()
     serializer_class = AuctionCreateSerializer
     permission_classes = [IsAuthenticated]
+
+    # filtering
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    search_fields = ['name', 'description_location']
+    filterset_fields = ['base_price', 'auction_date']
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

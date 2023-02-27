@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'djoser',
+    'django_filters',
 
     # local
     'authapp',    
