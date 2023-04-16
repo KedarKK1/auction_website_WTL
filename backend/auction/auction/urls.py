@@ -32,9 +32,9 @@ urlpatterns = [
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="EcoTech API v1",
+        title="BeDeFi API v1",
         default_version="v1",
-        description="API Endpoints for EcoTech API",
+        description="API Endpoints for BeDeFi API",
         contact=openapi.Contact(email="officialkedark1@gmail.com"),
     ),
     public=True,

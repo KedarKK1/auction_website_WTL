@@ -79,3 +79,18 @@ class AnswerSerializer(serializers.ModelSerializer):
             'belongs_to_question',
             'title',
         ]
+
+class BidSerializer(serializers.ModelSerializer):
+    belongs_to_auction = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
+    )
+    curr_bidder = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
+    )
+
+    class Meta:
+        model = BidModel
+        fields = [
+            'curr_price',
+            'curr_bidder',
+            'belongs_to_auction',
+            'curr_bidder',
+        ]

@@ -124,3 +124,9 @@ class AnswerListAPIView(generics.ListCreateAPIView):
 class AnswerRetrieveAPIView(generics.RetrieveAPIView):
     queryset = QuestionModel.objects.all()
     serializer_class = QuestionSerializer
+
+class BidListAPIView(generics.ListCreateAPIView):
+    serializer_class = BidSerializer
+    permission_classes = [IsAuthenticated, ]
+
+    
