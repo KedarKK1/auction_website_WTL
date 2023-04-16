@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -38,14 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # 3rd party
     'rest_framework',
     'djoser',
     'django_filters',
+    # "drf_yasg",
 
     # local
-    'authapp',    
+    'authapp.apps.AuthappConfig',
     'main',
 ]
 
@@ -127,7 +129,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-import os
 
 # Actual directory user files go to
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
