@@ -44,11 +44,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'django_filters',
-    # "drf_yasg",
+    "drf_yasg",
 
     # local
     'authapp.apps.AuthappConfig',
-    'main',
+    'main.apps.MainConfig',
+    # 'main',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'auction.wsgi.application'
 

@@ -20,6 +20,8 @@ urlpatterns = [
     # path('<int:pk>/question/', my_model_viewset, name='question-url'),
     path('auctions/<int:pk>/questions/', QuestionListCreateAPIView.as_view(), name='question-list-create'),
     path('questions/<int:pk>/', QuestionRetrieveAPIView.as_view(), name='question-retrieve'),
+    path('answers/<int:pk>', AnswerListAPIView.as_view(), name='answer-list-create'),
+    path('answer/<int:pk>', AnswerRetrieveAPIView.as_view(), name='answer-retrieve'),
 ]
 
 # this also working

@@ -15,9 +15,9 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
     # this makes sure whoever user is creating this post, only that user will be declared as owner
     # owner = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     owner = serializers.PrimaryKeyRelatedField(
-    #     default=serializers.CurrentUserDefault(),
-    #     queryset=User.objects.all(),
-        read_only=True, # this makes it read_only field, not-editable field
+        #     default=serializers.CurrentUserDefault(),
+        #     queryset=User.objects.all(),
+        read_only=True,  # this makes it read_only field, not-editable field
     )
 
     class Meta:
@@ -30,7 +30,7 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
             'description_brand',
             'description_model_number',
             'description_date_of_purchase',
-            'description_location','owner',
+            'description_location', 'owner',
         ]
         # exclude = [ 'owner', ]
 
@@ -44,10 +44,10 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
 # HyperlinkedModelSerializer - similar to the ModelSerializer class except that it uses hyperlinks to represent relationships, rather than primary keys
 
 class QuestionSerializer(serializers.ModelSerializer):
-    question_owner = serializers.PrimaryKeyRelatedField(read_only=True, # this makes it read_only field, not-editable field
-    )
-    belongs_to_auction = serializers.PrimaryKeyRelatedField(read_only=True, # this makes it read_only field, not-editable field
-    )
+    question_owner = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
+                                                        )
+    belongs_to_auction = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
+                                                            )
     # belongs_to_auction = serializers.ReadOnlyField() # also works fine
 
     class Meta:
@@ -59,12 +59,18 @@ class QuestionSerializer(serializers.ModelSerializer):
         ]
         # fields = '__all__'
 
+
 class AnswerSerializer(serializers.ModelSerializer):
-    answer_owner = serializers.PrimaryKeyRelatedField(read_only=True, # this makes it read_only field, not-editable field
-    )
-    belongs_to_question = serializers.PrimaryKeyRelatedField(read_only=True, # this makes it read_only field, not-editable field
-    )
-    parent_answer = serializers.ReadOnlyField() # also works fine
+    answer_owner = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
+                                                      )
+    belongs_to_question = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
+                                                             )
+    # parent_answer = serializers.PrimaryKeyRelatedField(
+    # read_only=True,  # this makes it read_only field, not-editable field
+    # unique = True,  # Set unique=True to enforce the OneToOne relationship
+    # queryset=User.objects.all(),
+    # )
+    # parent_answer = serializers.ReadOnlyField() # also works fine
 
     class Meta:
         model = AnswerModel

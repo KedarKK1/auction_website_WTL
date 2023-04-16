@@ -85,7 +85,8 @@ def favourite_add(self, arg, args):
 
 
 # class QuestionViewset(ListModelMixin, CreateModelMixin, GenericViewSet):
-class QuestionListCreateAPIView(generics.ListCreateAPIView): # TODO - here make sure to have a validation error incase the auction with that id does not exist
+# TODO - here make sure to have a validation error incase the auction with that id does not exist
+class QuestionListCreateAPIView(generics.ListCreateAPIView):
     # queryset = QuestionModel.objects.all()
     serializer_class = QuestionSerializer
     permission_classes = [IsAuthenticated, ]
@@ -93,12 +94,33 @@ class QuestionListCreateAPIView(generics.ListCreateAPIView): # TODO - here make 
     def get_queryset(self):
         auction = AuctionModel.objects.get(id = self.kwargs.get('pk'))
         return QuestionModel.objects.filter(belongs_to_auction = auction)
-    
+
     def perform_create(self, serializer):
-        auction = AuctionModel.objects.get(pk = self.kwargs['pk'])
-        serializer.save(question_owner = self.request.user, belongs_to_auction = auction)
+        auction = AuctionModel.objects.get(pk=self.kwargs['pk'])
+        serializer.save(question_owner=self.request.user,
+                        belongs_to_auction=auction)
+
 
 class QuestionRetrieveAPIView(generics.RetrieveAPIView):
     queryset = QuestionModel.objects.all()
     serializer_class = QuestionSerializer
 
+
+class AnswerListAPIView(generics.ListCreateAPIView):
+    serializer_class = AnswerSerializer
+    permission_classes = [IsAuthenticated, ]
+
+    def get_queryset(self):
+        # answer = AnswerModel.objects.get(belongs_to_question = self.kwargs.get('question_id') and id = self.kwargs.get('answer_id')) # ^ Note - here .get gives only one result, hence use filter
+        answers = AnswerModel.objects.filter(belongs_to_question = self.kwargs.get('pk') )
+        return answers
+    
+    def perform_create(self, serializer):
+        # answer = AnswerModel.objects.get(pk = self.kwargs['pk'])
+        # serializer.save(answer_owner = self.request.user, belongs_to_question = self.kwargs.get('pk'), belongs_to_auction = answer)
+        question = QuestionModel.objects.get(id = self.kwargs.get('pk') ) 
+        serializer.save(answer_owner = self.request.user, belongs_to_question = question )
+
+class AnswerRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = QuestionModel.objects.all()
+    serializer_class = QuestionSerializer
