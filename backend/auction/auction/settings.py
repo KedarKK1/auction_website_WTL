@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',  # add daphne to the beginning of your INSTALLED_APPS setting
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'djoser',
     'django_filters',
     "drf_yasg",
+    "channels",
 
     # local
     'authapp.apps.AuthappConfig',
@@ -173,3 +175,7 @@ DJOSER = {
         'current_user': 'authapp.serializers.UserSerializer'
     }
 }
+
+# from auction.routing import application
+ASGI_APPLICATION = "auction.asgi.application" # adding ASGI_Application to our project
+# ASGI_APPLICATION = "auction.routing.application"  # adding ASGI_Application to our project
