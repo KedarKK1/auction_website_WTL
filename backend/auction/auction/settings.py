@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     "drf_yasg",
     "channels",
+    'channels_redis',
 
     # local
     'authapp.apps.AuthappConfig',
@@ -179,3 +180,29 @@ DJOSER = {
 # from auction.routing import application
 ASGI_APPLICATION = "auction.asgi.application" # adding ASGI_Application to our project
 # ASGI_APPLICATION = "auction.routing.application"  # adding ASGI_Application to our project
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+            # "on_disconnect": "redis.disconnect",
+            # "symmetric_encryption_keys": [SECRET_KEY],
+            # "channel_capacity": {
+            #     "http.request": 200,
+            #     "http.response!*": 10,
+            #     re.compile(r"^websocket.send\!.+"): 20,
+            # },
+        },
+    },
+}
+
+# else you can also use alternate pub/sub mechanism of redis
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.pubsub.RedisPubSubChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("localhost", 6379)],
+#         },
+#     },
+# }

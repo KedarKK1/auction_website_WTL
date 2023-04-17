@@ -22,6 +22,10 @@ urlpatterns = [
     path('questions/<int:pk>/', QuestionRetrieveAPIView.as_view(), name='question-retrieve'),
     path('answers/<int:pk>', AnswerListAPIView.as_view(), name='answer-list-create'),
     path('answer/<int:pk>', AnswerRetrieveAPIView.as_view(), name='answer-retrieve'),
+    
+    path('bids/', AuctionAPIView.as_view(), name='auction-list'),
+    path('bids/<int:auction_id>/bid/', BidAPIView.as_view(), name='bid-create'),
+    path('bids/<int:auction_id>/bid/current/', BidAPIView.as_view(), name='bid-current'),
 ]
 
 # this also working

@@ -33,3 +33,4 @@ urllib3==1.26.14
 drf_yasg
 channels
 daphne
+channels-redis

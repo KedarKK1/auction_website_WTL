@@ -11,7 +11,14 @@ from django_filters import rest_framework as filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from datetime import timedelta
 
+# from django.contrib.auth.decorators import login_required
 
 # CreateModelMixin: Provides a create method for creating a new object instance.
 
@@ -125,8 +132,123 @@ class AnswerRetrieveAPIView(generics.RetrieveAPIView):
     queryset = QuestionModel.objects.all()
     serializer_class = QuestionSerializer
 
-class BidListAPIView(generics.ListCreateAPIView):
-    serializer_class = BidSerializer
-    permission_classes = [IsAuthenticated, ]
+# class BidListAPIView(generics.ListCreateAPIView):
+#     queryset = BidModel.objects.all()
+#     serializer_class = BidSerializer
+#     permission_classes = [IsAuthenticated, ]
 
+#     def create(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data = request.data)
+#         serializer.is_valid(raise_exception = True)
+#         self.perform_create(serializer)
+#         bid_data = serializer.data
+#         channel_layer = get_channel_layer()
+#         async_to_sync(channel_layer.group_send)(
+#             f"auction_{bid_data['belongs_to_auction']}",
+#             {
+#                 "type": "bid.message",
+#                 "data": bid_data,
+#             }
+#         )
+#         return Response(serializer.data, status = "201")
+
+class BidAPIView(APIView):
+    serializer_class = BidSerializer
+
+    def post(self, request, auction_id):
+        # auction = get_object_or_404(AuctionModel, id = auction_id)
+        auction = AuctionModel.objects.get(id = auction_id)
+        user = request.user
+        if not user.is_authenticated:
+            return Response({
+                'detail': 'Authentication credentials were not provided.',
+            },
+            status = "401",
+            )
+        
+        # Check bid price is at least 1rs higher than previous bid
+        last_bid = BidModel.objects.filter(belongs_to_auction = auction_id).order_by('-bid_time').first()
+        if(last_bid):
+            if(int(request.data['curr_price']) <= int(last_bid.curr_price)):
+                return Response({'detail': 'Bid price must be at least higher than current highest bid.'}, status = "400")
+            
+        # Check bid time is within 90 seconds from previous bid
+        if(last_bid):
+            if((timezone.now() - last_bid.bid_time) > timedelta(seconds = 90)):
+                return Response({'detail': 'Bid time must be within 90 seconds from previous bid.'}, status = "400",)
+            
+        # Create new bid
+        if not last_bid:
+            if(int(request.data['curr_price']) <= int(auction.base_price)):
+                return Response({'detail': 'Bid price must be at least higher than current highest bid.'}, status = "400")
+        else:
+            bid = BidModel.objects.create(
+                belongs_to_auction = auction,
+                curr_price = request.data['curr_price'],
+                curr_bidder = user
+            )
+
+        # Update auction's current price
+        # auction.curr_price = bid.curr_price
+        # auction.save()
+
+        # Send new bid data to WebSocket clients
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            "auction_%d" % auction.id,
+            {
+                "type": "new_bid",
+                "bid_id": bid.id,
+                "curr_price": str(bid.curr_price),
+                "curr_bidder": bid.curr_bidder.username
+            },
+        )
+
+        return Response({'detail': 'Bid created successfully.'}, status = "201")
     
+    def get(self, request, auction_id):
+        # auction = get_object_or_404(AuctionModel, id = auction.id)
+        auction = AuctionModel.objects.filter(id = auction_id)
+        last_bid = BidModel.objects.filter(belongs_to_auction = auction_id).order_by('-bid_time').first()
+        if(last_bid):
+            data = {
+                'curr_price': last_bid.curr_price,
+                'curr_bidder': last_bid.curr_bidder.username,
+            }
+            return Response(data, 
+                            status = "200"  
+                            )
+        else:
+            return Response(
+                {'detail': 'No bids have been made for this auction yet.'},
+                status = "200",
+            )
+        
+class AuctionAPIView(APIView):
+    def get(self, request):
+        auctions = AuctionModel.objects.all()
+        data = []
+        for auction in auctions:
+            last_bid = BidModel.objects.filter(belongs_to_auction = auction.id).order_by('-bid_time').first()
+            if(last_bid):
+                curr_price = last_bid.curr_price
+                curr_bidder = last_bid.curr_bidder.username
+            else:
+                curr_price = auction.base_price
+                curr_bidder = "No bids yet"
+            
+            auction_data = {
+                'id': auction.id,
+                'name': auction.name,
+                'auction_date': auction.auction_date,
+                'base_price': auction.base_price,
+                'curr_price': curr_price,
+                'curr_bidder': curr_bidder
+            }
+            data.append(auction_data)
+        return Response(data, status = "200")
+
+
+
+
+

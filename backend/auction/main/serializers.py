@@ -92,5 +92,5 @@ class BidSerializer(serializers.ModelSerializer):
             'curr_price',
             'curr_bidder',
             'belongs_to_auction',
-            'curr_bidder',
+            # 'curr_bidder',
         ]
