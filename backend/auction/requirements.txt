@@ -34,3 +34,4 @@ drf_yasg
 channels
 daphne
 channels-redis
+celery
