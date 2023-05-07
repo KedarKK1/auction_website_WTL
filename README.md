@@ -2,6 +2,8 @@
 ```
 cd backend
 env\Scripts\activate.bat
+cd auction 
+python manage.py runserver
 ```
 
 # To run frontend -
@@ -34,6 +36,17 @@ Email: admin2@gmail.com
 Password: dmin2@1234
 Password (again): dmin2@1234
 Superuser created successfully.
+
+## to start celery worker -
+```
+celery -A auction.celery worker --loglevel=info (do this inside outermost auction folder => celery -A myproject.celery worker --loglevel=info)
+celery -A celery worker --loglevel=info 
+```
+
+Payment link 
+```
+https://rzp.io/l/rxLxyVp
+```
 
 ## ERRORS :
 if "django.db.utils.OperationalError: no such table: main_auctionmodel" this error comes then

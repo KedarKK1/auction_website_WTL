@@ -73,15 +73,17 @@ from datetime import timedelta
 # for CRUD operations # here for PUT operation, we get prefilled forms
 class AuctionViewset(ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     # class AuctionViewset(generics.RetrieveUpdateDestroyAPIView, generics.ListCreateAPIView): # also worked, this have CRUD Functionality, but gives me error at the time of getting multiple objects
-    queryset = AuctionModel.objects.all()
+    queryset = AuctionModel.objects.all() # * works fine
+    # queryset = AuctionModel.objects.filter(base_price__range=[3000,5000]) # * also works fine
     serializer_class = AuctionCreateSerializer
     permission_classes = [IsAuthenticated]
     # lookup_field = 'owner_id' # update the lookup field name
 
     # filtering
-    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter, ]
     search_fields = ['name', 'description_location']
     filterset_fields = ['base_price', 'auction_date']
+    # ordering_fields = '__all__' # not required, but good practice to have it
 
     # def perform_create(self, serializer):
     #     serializer.save(owner=self.request.user)

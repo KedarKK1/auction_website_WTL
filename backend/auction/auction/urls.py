@@ -23,8 +23,8 @@ from rest_framework import permissions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path(r'auth/', include('djoser.urls')), # & Comment this two lines out, to get swaggr running 
-    # path('auth/', include('djoser.urls.jwt')), # &  Comment this two lines out, to get swaggr running 
+    path(r'auth/', include('djoser.urls')), # & Comment this two lines out, to get swagger running 
+    # path('auth/', include('djoser.urls.jwt')), # &  Comment this two lines out, to get swagger running 
     path('api/', include('main.urls')),
     path('auth2/', include("authapp.urls")),
     # ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
@@ -32,9 +32,9 @@ urlpatterns = [
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="BeDeFi API v1",
+        title="BiDeFi API v1",
         default_version="v1",
-        description="API Endpoints for BeDeFi API",
+        description="API Endpoints for BiDeFi API",
         contact=openapi.Contact(email="officialkedark1@gmail.com"),
     ),
     public=True,
