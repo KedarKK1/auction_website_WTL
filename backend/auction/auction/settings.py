@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "channels",
     'channels_redis',
+    'corsheaders',
 
     # local
     'authapp.apps.AuthappConfig',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # added this for cors
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +66,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True # added this for cors
+
 
 ROOT_URLCONF = 'auction.urls'
 

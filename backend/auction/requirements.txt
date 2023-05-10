@@ -30,6 +30,7 @@ sqlparse==0.4.3
 tzdata==2022.7
 uritemplate==4.1.1
 urllib3==1.26.14
+django-cors-headers==3.14.0
 drf_yasg
 channels
 daphne

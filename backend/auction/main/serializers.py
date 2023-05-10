@@ -23,6 +23,7 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuctionModel
         fields = [
+            'id',
             'name',
             'auction_date',
             'description',
@@ -80,11 +81,12 @@ class AnswerSerializer(serializers.ModelSerializer):
             'title',
         ]
 
+
 class BidSerializer(serializers.ModelSerializer):
     belongs_to_auction = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
-    )
+                                                            )
     curr_bidder = serializers.PrimaryKeyRelatedField(read_only=True,  # this makes it read_only field, not-editable field
-    )
+                                                     )
 
     class Meta:
         model = BidModel

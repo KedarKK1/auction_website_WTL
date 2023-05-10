@@ -24,7 +24,7 @@ from rest_framework import permissions
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'auth/', include('djoser.urls')), # & Comment this two lines out, to get swagger running 
-    # path('auth/', include('djoser.urls.jwt')), # &  Comment this two lines out, to get swagger running 
+    path(r'auth/', include('djoser.urls.jwt')), # &  Comment this two lines out, to get swagger running 
     path('api/', include('main.urls')),
     path('auth2/', include("authapp.urls")),
     # ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
