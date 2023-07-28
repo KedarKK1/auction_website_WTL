@@ -70,10 +70,10 @@ Frontend - <a href="https://github.com/KedarKK1/auction_frontend_WTL/graphs/cont
 <img src="./Screenshots/ss4.PNG" alt="auction_page2" />
 <!-- <img src="./Screenshots/ss5.PNG" alt="login_page" /> -->
 <img src="./Screenshots/ss15.PNG" alt="razorpay_page" />
-<img src="./Screenshots/ss16.PNG" alt="djoser_page" width="230px" height="4000px" />
-<img src="./Screenshots/ss17.PNG" alt="djoser_page_2" width="190px" height="2000px" />
-<img src="./Screenshots/ss18.PNG" alt="djoser_page_3" width="190px" height="2000px" />
-<img src="./Screenshots/ss19.PNG" alt="djoser_page_4" width="190px" height="2000px" />
+<img src="./Screenshots/ss16.PNG" alt="djoser_page"  />
+<img src="./Screenshots/ss17.PNG" alt="djoser_page_2"  />
+<img src="./Screenshots/ss18.PNG" alt="djoser_page_3" />
+<img src="./Screenshots/ss19.PNG" alt="djoser_page_4" />
 <img src="./Screenshots/ss20.PNG" alt="signUp_api_page" />
 <img src="./Screenshots/ss21.PNG" alt="signIn_api_token_generation_page" />
 <img src="./Screenshots/ss27.PNG" alt="token_generation_page" />
