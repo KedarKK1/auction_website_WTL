@@ -57,10 +57,10 @@ python manage.py migrate main => specify name
 ## STAR THIS REPOSITORY IF LOVED OUR EFFORTS!
 
 ## Contributors 😎 <p align="center"> 
-Backend - <a href="https://github.com/KedarKK1/auction_website_WTL/graphs/contributors"> <img src="https://contrib.rocks/image?repo=KedarKK1/auction_website_WTL" /> </a> 
+<b>Backend</b> - <a href="https://github.com/KedarKK1/auction_website_WTL/graphs/contributors"> <img src="https://contrib.rocks/image?repo=KedarKK1/auction_website_WTL" /> </a> 
 
 <br />
-Frontend - <a href="https://github.com/KedarKK1/auction_frontend_WTL/graphs/contributors"> <img src="https://contrib.rocks/image?repo=KedarKK1/auction_frontend_WTL" /> </a>  
+<b>Frontend</b> - <a href="https://github.com/KedarKK1/auction_frontend_WTL/graphs/contributors"> <img src="https://contrib.rocks/image?repo=KedarKK1/auction_frontend_WTL" /> </a>  
 </p>
 
 # Event Screenshots
