@@ -11,6 +11,7 @@ router = routers.DefaultRouter()  # DefaultRouter is similar to router SimpleRou
 
 # below working
 router.register('auction', AuctionViewset, basename='auction-url')
+router.register('images', ImageViewSet, basename='images-url')
 # my_model_viewset = QuestionViewset.as_view({'get': 'list', 'post': 'create', 'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})
 # my_model_viewset = QuestionViewset.as_view({'post': 'create', 'get': 'retrieve'}) # Used for Mixins like ListCreateMixins, etc
 

@@ -9,6 +9,10 @@ from rest_framework.fields import CurrentUserDefault
 #         model = Description
 #         fields = "__all__"
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('id', 'image')
 
 class AuctionCreateSerializer(serializers.ModelSerializer):
     # Description = DescriptionSerializer(read_only=True)
@@ -31,7 +35,9 @@ class AuctionCreateSerializer(serializers.ModelSerializer):
             'description_brand',
             'description_model_number',
             'description_date_of_purchase',
-            'description_location', 'owner',
+            'description_location', 
+            'images',
+            'owner',
         ]
         # exclude = [ 'owner', ]
 

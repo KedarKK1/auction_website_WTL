@@ -57,7 +57,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # added this for cors
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,9 +64,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # added this for cors
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True # added this for cors
+CORS_ORIGIN_ALLOW_ALL = True  # added this for cors
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:8080",
+#     "http://127.0.0.1:9000",
+#     "http://127.0.0.1:3000",
+#     "http://localhost:3000",
+# ]
+CORS_ALLOW_HEADERS = "*"
 
 
 ROOT_URLCONF = 'auction.urls'
@@ -165,7 +174,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'], # added for filtering later onwards
+    # added for filtering later onwards
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
 SIMPLE_JWT = {
@@ -184,7 +194,8 @@ DJOSER = {
 }
 
 # from auction.routing import application
-ASGI_APPLICATION = "auction.asgi.application" # adding ASGI_Application to our project
+# adding ASGI_Application to our project
+ASGI_APPLICATION = "auction.asgi.application"
 # ASGI_APPLICATION = "auction.routing.application"  # adding ASGI_Application to our project
 
 CHANNEL_LAYERS = {

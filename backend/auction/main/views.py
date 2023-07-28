@@ -3,7 +3,7 @@ from .models import *
 from authapp.models import *
 from .serializers import *
 # from rest_framework.views import APIView, Response
-from rest_framework import mixins, viewsets, generics
+from rest_framework import mixins, viewsets, generics, status
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.permissions import IsAuthenticated
@@ -71,6 +71,11 @@ from datetime import timedelta
 
 # class AuctionViewset(ListModelMixin, CreateModelMixin, RetrieveModelMixin, GenericViewSet): # For CRU operations only
 # for CRUD operations # here for PUT operation, we get prefilled forms
+
+class ImageViewSet(viewsets.ModelViewSet):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+
 class AuctionViewset(ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     # class AuctionViewset(generics.RetrieveUpdateDestroyAPIView, generics.ListCreateAPIView): # also worked, this have CRUD Functionality, but gives me error at the time of getting multiple objects
     queryset = AuctionModel.objects.all() # * works fine
@@ -87,6 +92,19 @@ class AuctionViewset(ListModelMixin, CreateModelMixin, RetrieveModelMixin, Updat
 
     # def perform_create(self, serializer):
     #     serializer.save(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        print("request: ", request)
+        images = self.request.FILES.getlist('images')
+        if images:
+            auction = serializer.save(owner=self.request.user)
+            for image in images:
+                auction.images.create(image=image)
+        else:
+            serializer.save(owner=self.request.user)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 def favourite_add(self, arg, args):

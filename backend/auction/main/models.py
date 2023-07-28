@@ -26,6 +26,9 @@ def upload_to(instance, filename):
     # description_additional_accessories = ArrayField(models.CharField(max_length=255), blank=True)
     # description_additional_info = ArrayField(models.CharField(max_length=255), blank=True)
 
+class Image(models.Model):
+    image = models.ImageField(upload_to='auction_images')
+
 
 class AuctionModel(models.Model):
 
@@ -64,6 +67,7 @@ class AuctionModel(models.Model):
 
     # images - multiple later, single for now
     # image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
+    images = models.ManyToManyField('Image', blank=True)
 
     # favourites = models.ManyToManyField(User, related_name="favourite", default=None, blank = True) # added in Users field
 
